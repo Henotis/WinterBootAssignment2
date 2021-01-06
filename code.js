@@ -120,12 +120,7 @@ function stand() {
 		reset();
 	}
 }
-/*
-//TODO:
-	To make the aces(the 1's in this case) we need only ask if deck[index] is equal to 1
-	for the user, it's equal to one, we have it randomly select 1 or 11
-	the AI will always pick either 11 when an ace(1) is detected
-*/
+
 // starts the game
 function start() {
 	reset();
