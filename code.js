@@ -67,6 +67,10 @@ function status() {
 	console.log("Wins: " + wins);
 	console.log("Losses: " + losses);
 	console.log("Ties: " + ties);
+
+	console.log(`AI is holding ${aiHand}`);
+	console.log(`User is holding ${userHand}`);
+
 }
 
 // this function should remove the card from deck once it's dealt
