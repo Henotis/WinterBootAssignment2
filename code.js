@@ -21,10 +21,10 @@
 */
 
 let deck = [
-	11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,
-	11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,
-	11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,
-	11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10
+	11,
+	11,
+	11,
+	11
 ];
 
 let wins = 0;
@@ -150,7 +150,8 @@ function start() {
 	if(aiTotal < 17){
 		index = Math.floor(Math.random()*deck.length);
 		console.log("Index removed: " + index);
-		aiHand.push(deck[index]);
+		aceIndex = deck[index];
+		aiHand.push(aceIndex);
 		cardRemove(index);
 		aiTotal = aiHand.reduce(reducer);
 		if(aiTotal > 21){
@@ -162,7 +163,6 @@ function start() {
 	}
 	console.log("AI current hand: " + aiTotal)
 
-	let aceDetect = 0;
 	for(let i = 0; i < 2; i++){
 		index = Math.floor(Math.random()*deck.length);
 		console.log("Index removed: " + index);
