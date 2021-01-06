@@ -18,11 +18,12 @@
 	- start()
 */
 
+//The 1's are considered aces and 10's are faces
 let deck = [
-	1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,
-	1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,
-	1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,
-	1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10
+	1, 1,
+	1, 1,
+	1, 1,
+	1, 1
 ];
 
 let wins = 0;
@@ -41,10 +42,10 @@ const reducer = (accumulator, currentValue) => accumulator + currentValue;
 // returns the Blackjack game to its initial state
 function reset() {
 	deck = [
-		1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,
-		1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,
-		1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,
-		1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10
+		1, 1,
+		1, 1,
+		1, 1,
+		1, 1
 	];
 
 	aiHand = [];
@@ -54,17 +55,13 @@ function reset() {
 	userTotal = 0
 }
 
-function ace(inputTotal){
-	if(inputTotal > 21){
-		return -10;
-	}
-}
-
 // displays wins, losses, and ties
 function status() {
 	console.log("Wins: " + wins);
 	console.log("Losses: " + losses);
 	console.log("Ties: " + ties);
+	console.log("AI Hand: " + aiTotal)
+	console.log("User Hand: " + userTotal)
 }
 
 // this function should remove the card from deck once it's dealt
@@ -77,15 +74,17 @@ function hit() {
 	let aceIndex = 0;
 	///////////////////////////
 	index = Math.floor(Math.random()*deck.length);
-	console.log("Index removed: " + index);
 	aceIndex = deck[index];
-	console.log(aceIndex);
+	console.log("Index removed: " + index + " Value: " + aceIndex);
 	userHand.push(aceIndex);
 	cardRemove(index);
 	///////////////////////////
 	userTotal = userHand.reduce(reducer);
-	if(aceIndex == 11){
-		userTotal += ace(userTotal);
+	if(userTotal + 11 <= 22){
+		if(aceIndex == 1){
+			userHand.push(10)
+			userTotal = userHand.reduce(reducer);
+		}
 	}
 	console.log("Your current Total: " + userTotal);
 	if (userTotal > 21) {
@@ -121,12 +120,7 @@ function stand() {
 		reset();
 	}
 }
-/*
-//TODO:
-	To make the aces(the 1's in this case) we need only ask if deck[index] is equal to 1
-	for the user, it's equal to one, we have it randomly select 1 or 11
-	the AI will always pick either 11 when an ace(1) is detected
-*/
+
 // starts the game
 function start() {
 	reset();
@@ -136,40 +130,63 @@ function start() {
 	for(let i = 0; i < 2; i++){
 		//assigning a random index from deck size to cutCard
 		index = Math.floor(Math.random()*deck.length);
-		//tracking the index of the card removed
-		console.log("Index removed: " + index);
-		//pushing the value if the cardIndex into hand
+		//assinging to a variable
 		aceIndex = deck[index];
+		//tracking the index of the card removed
+		console.log("Index removed: " + index + " Value: " + aceIndex);
+		//pushing the value if the cardIndex into hand
 		aiHand.push(aceIndex);
 		//finally cutting out the card!
 		cardRemove(index);
+		aiTotal = aiHand.reduce(reducer);
+		//checking if adding theoretical ace at the value 11 is > 22
+		if(aiTotal + 11 <= 22){
+			//checking if a 1 was selected
+			if(aceIndex == 1){
+				//this pushes 10 because 1 is already pushed into
+				//aiHand, adding 10 will make it 11. Ace's value.
+				aiHand.push(10)
+				aiTotal = aiHand.reduce(reducer);
+			}
+		}
 	}
-	aiTotal = aiHand.reduce(reducer);
-	
+	//the AI will hit again if it's count is below 17
 	if(aiTotal < 17){
 		index = Math.floor(Math.random()*deck.length);
-		console.log("Index removed: " + index);
 		aceIndex = deck[index];
+		console.log("Index removed: " + index + " Value: " + aceIndex);
 		aiHand.push(aceIndex);
 		cardRemove(index);
 		aiTotal = aiHand.reduce(reducer);
+		if(userTotal + 11 <= 22){
+			if(aceIndex == 1){
+				userHand.push(10)
+				userTotal = userHand.reduce(reducer);
+			}
+		}
 	}
+	//the AI will bust if over 21
 	if(aiTotal > 21){
 		console.log("AI has busted! Game has been reset!");
 		console.log("AI's total was: " + aiTotal);
 		reset();
 	}
 	console.log("AI current hand: " + aiTotal);
+
+	//User initial draw
 	for(let i = 0; i < 2; i++){
 		index = Math.floor(Math.random()*deck.length);
-		console.log("Index removed: " + index);
 		aceIndex = deck[index];
+		console.log("Index removed: " + index + " Value: " + aceIndex);
 		userHand.push(aceIndex);
 		cardRemove(index);	
-	}
-	userTotal = userHand.reduce(reducer);
-	if(aceIndex == 11){
-		userTotal += ace(userTotal);
+		userTotal = userHand.reduce(reducer);
+		if(userTotal + 11 <= 22){
+			if(aceIndex == 1){
+				userHand.push(10)
+				userTotal = userHand.reduce(reducer);
+			}
+		}
 	}
 	console.log("User current hand: " + userTotal);
 }
