@@ -71,9 +71,8 @@ function hit() {
 	let aceIndex = 0;
 	///////////////////////////
 	index = Math.floor(Math.random()*deck.length);
-	console.log("Index removed: " + index);
 	aceIndex = deck[index];
-	console.log(aceIndex);
+	console.log("Index removed: " + index + " Value: " + aceIndex);
 	userHand.push(aceIndex);
 	cardRemove(index);
 	///////////////////////////
@@ -134,9 +133,9 @@ function start() {
 		//assigning a random index from deck size to cutCard
 		index = Math.floor(Math.random()*deck.length);
 		//tracking the index of the card removed
-		console.log("Index removed: " + index);
 		//pushing the value if the cardIndex into hand
 		aceIndex = deck[index];
+		console.log("Index removed: " + index + " Value: " + aceIndex);
 		aiHand.push(aceIndex);
 		//finally cutting out the card!
 		cardRemove(index);
@@ -153,8 +152,8 @@ function start() {
 	
 	if(aiTotal < 17){
 		index = Math.floor(Math.random()*deck.length);
-		console.log("Index removed: " + index);
 		aceIndex = deck[index];
+		console.log("Index removed: " + index + " Value: " + aceIndex);
 		aiHand.push(aceIndex);
 		cardRemove(index);
 		aiTotal = aiHand.reduce(reducer);
@@ -173,8 +172,8 @@ function start() {
 	console.log("AI current hand: " + aiTotal);
 	for(let i = 0; i < 2; i++){
 		index = Math.floor(Math.random()*deck.length);
-		console.log("Index removed: " + index);
 		aceIndex = deck[index];
+		console.log("Index removed: " + index + " Value: " + aceIndex);
 		userHand.push(aceIndex);
 		cardRemove(index);	
 		userTotal = userHand.reduce(reducer);
