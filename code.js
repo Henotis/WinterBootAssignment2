@@ -139,7 +139,8 @@ function start() {
 		//tracking the index of the card removed
 		console.log("Index removed: " + index);
 		//pushing the value if the cardIndex into hand
-		aiHand.push(deck[index]);
+		aceIndex = deck[index];
+		aiHand.push(aceIndex);
 		//finally cutting out the card!
 		cardRemove(index);
 	}
@@ -158,7 +159,7 @@ function start() {
 		console.log("AI's total was: " + aiTotal);
 		reset();
 	}
-	
+	console.log("AI current hand: " + aiTotal);
 	for(let i = 0; i < 2; i++){
 		index = Math.floor(Math.random()*deck.length);
 		console.log("Index removed: " + index);
