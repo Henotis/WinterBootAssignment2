@@ -10,21 +10,19 @@
 	- User should be able to check status.
 	- User should be able to reset the game.
 	- User should be able to start the Blackjack game.
-
 	===== FUNCTION STUBS =====
 	- hit()
 	- stand()
 	- status()
 	- reset()
 	- start()
-
 */
 
 let deck = [
-	11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10,
-	11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10,
-	11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10,
-	11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10
+	11,
+	11,
+	11,
+	11
 ];
 
 let wins = 0;
@@ -43,10 +41,10 @@ const reducer = (accumulator, currentValue) => accumulator + currentValue;
 // returns the Blackjack game to its initial state
 function reset() {
 	deck = [
-	11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10,
-	11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10,
-	11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10,
-	11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10
+		11,
+		11,
+		11,
+		11
 	];
 
 	aiHand = [];
@@ -67,10 +65,6 @@ function status() {
 	console.log("Wins: " + wins);
 	console.log("Losses: " + losses);
 	console.log("Ties: " + ties);
-
-	console.log(`AI is holding ${aiHand}`);
-	console.log(`User is holding ${userHand}`);
-
 }
 
 // this function should remove the card from deck once it's dealt
@@ -158,15 +152,13 @@ function start() {
 		aiHand.push(aceIndex);
 		cardRemove(index);
 		aiTotal = aiHand.reduce(reducer);
-		if(aiTotal > 21){
-			console.log("AI has busted! Game has been reset!");
-			reset();
-			console.log("AI's total was: ");
-			return aiTotal;
-		}
 	}
-	console.log("AI current hand: " + aiTotal)
-
+	if(aiTotal > 21){
+		console.log("AI has busted! Game has been reset!");
+		console.log("AI's total was: " + aiTotal);
+		reset();
+	}
+	
 	for(let i = 0; i < 2; i++){
 		index = Math.floor(Math.random()*deck.length);
 		console.log("Index removed: " + index);
