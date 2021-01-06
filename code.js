@@ -54,17 +54,13 @@ function reset() {
 	userTotal = 0
 }
 
-function ace(inputTotal){
-	if(inputTotal > 21){
-		return -10;
-	}
-}
-
 // displays wins, losses, and ties
 function status() {
 	console.log("Wins: " + wins);
 	console.log("Losses: " + losses);
 	console.log("Ties: " + ties);
+	console.log("AI Hand: " + aiTotal)
+	console.log("User Hand: " + userTotal)
 }
 
 // this function should remove the card from deck once it's dealt
@@ -77,16 +73,18 @@ function hit() {
 	let aceIndex = 0;
 	///////////////////////////
 	index = Math.floor(Math.random()*deck.length);
-	console.log("Index removed: " + index);
 	aceIndex = deck[index];
-	console.log(aceIndex);
+	console.log("Index removed: " + index + " Value: " + aceIndex);
 	userHand.push(aceIndex);
 	cardRemove(index);
 	///////////////////////////
 	userTotal = userHand.reduce(reducer);
-	if(aceIndex == 11){
-		userTotal += ace(userTotal);
-	}
+	if(userTotal + 11 < 22){
+		if(aceIndex == 1){
+			userHand.push(10)
+			userTotal = aiHand.reduce(reducer);
+		}
+		}
 	console.log("Your current Total: " + userTotal);
 	if (userTotal > 21) {
 		losses += 1;
@@ -137,22 +135,36 @@ function start() {
 		//assigning a random index from deck size to cutCard
 		index = Math.floor(Math.random()*deck.length);
 		//tracking the index of the card removed
-		console.log("Index removed: " + index);
 		//pushing the value if the cardIndex into hand
 		aceIndex = deck[index];
+		console.log("Index removed: " + index + " Value: " + aceIndex);
 		aiHand.push(aceIndex);
 		//finally cutting out the card!
 		cardRemove(index);
+		aiTotal = aiHand.reduce(reducer);
+		if(aiTotal + 11 < 22){
+		if(aceIndex == 1){
+			aiHand.push(10)
+			aiTotal = aiHand.reduce(reducer);
+		}
 	}
-	aiTotal = aiHand.reduce(reducer);
+	}
+
+
 	
 	if(aiTotal < 17){
 		index = Math.floor(Math.random()*deck.length);
-		console.log("Index removed: " + index);
 		aceIndex = deck[index];
+		console.log("Index removed: " + index + " Value: " + aceIndex);
 		aiHand.push(aceIndex);
 		cardRemove(index);
 		aiTotal = aiHand.reduce(reducer);
+		if(aiTotal + 11 < 21){
+		if(aceIndex == 1){
+			aiHand.push(10)
+			aiTotal = aiHand.reduce(reducer);
+		}
+	}
 	}
 	if(aiTotal > 21){
 		console.log("AI has busted! Game has been reset!");
@@ -162,14 +174,17 @@ function start() {
 	console.log("AI current hand: " + aiTotal);
 	for(let i = 0; i < 2; i++){
 		index = Math.floor(Math.random()*deck.length);
-		console.log("Index removed: " + index);
 		aceIndex = deck[index];
+		console.log("Index removed: " + index + " Value: " + aceIndex);
 		userHand.push(aceIndex);
 		cardRemove(index);	
-	}
-	userTotal = userHand.reduce(reducer);
-	if(aceIndex == 11){
-		userTotal += ace(userTotal);
+		userTotal = userHand.reduce(reducer);
+		if(userTotal + 11 < 22){
+		if(aceIndex == 1){
+			userHand.push(10)
+			userTotal = userHand.reduce(reducer);
+		}
+		}
 	}
 	console.log("User current hand: " + userTotal);
 }
