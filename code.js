@@ -77,7 +77,7 @@ function hit() {
 	cardRemove(index);
 	///////////////////////////
 	userTotal = userHand.reduce(reducer);
-	if(userTotal + 11 < 21){
+	if(userTotal + 11 < 22){
 		if(aceIndex == 1){
 			userHand.push(10)
 			userTotal = aiHand.reduce(reducer);
@@ -140,7 +140,7 @@ function start() {
 		//finally cutting out the card!
 		cardRemove(index);
 		aiTotal = aiHand.reduce(reducer);
-		if(aiTotal + 11 < 21){
+		if(aiTotal + 11 < 22){
 		if(aceIndex == 1){
 			aiHand.push(10)
 			aiTotal = aiHand.reduce(reducer);
@@ -177,7 +177,7 @@ function start() {
 		userHand.push(aceIndex);
 		cardRemove(index);	
 		userTotal = userHand.reduce(reducer);
-		if(userTotal + 11 < 21){
+		if(userTotal + 11 < 22){
 		if(aceIndex == 1){
 			userHand.push(10)
 			userTotal = aiHand.reduce(reducer);
