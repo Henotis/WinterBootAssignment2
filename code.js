@@ -59,6 +59,8 @@ function status() {
 	console.log("Wins: " + wins);
 	console.log("Losses: " + losses);
 	console.log("Ties: " + ties);
+	console.log("AI Hand: " + aiTotal)
+	console.log("User Hand: " + userTotal)
 }
 
 // this function should remove the card from deck once it's dealt
@@ -180,7 +182,7 @@ function start() {
 		if(userTotal + 11 < 22){
 		if(aceIndex == 1){
 			userHand.push(10)
-			userTotal = aiHand.reduce(reducer);
+			userTotal = userHand.reduce(reducer);
 		}
 		}
 	}
