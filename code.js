@@ -85,7 +85,7 @@ function hit() {
 			userHand.push(10)
 			userTotal = aiHand.reduce(reducer);
 		}
-		}
+	}
 	console.log("Your current Total: " + userTotal);
 	if (userTotal > 21) {
 		losses += 1;
@@ -139,11 +139,11 @@ function start() {
 		cardRemove(index);
 		aiTotal = aiHand.reduce(reducer);
 		if(aiTotal + 11 <= 22){
-		if(aceIndex == 1){
-			aiHand.push(10)
-			aiTotal = aiHand.reduce(reducer);
+			if(aceIndex == 1){
+				aiHand.push(10)
+				aiTotal = aiHand.reduce(reducer);
+			}
 		}
-	}
 	}
 
 	if(aiTotal < 17){
@@ -154,11 +154,11 @@ function start() {
 		cardRemove(index);
 		aiTotal = aiHand.reduce(reducer);
 		if(aiTotal + 11 <= 21){
-		if(aceIndex == 1){
-			aiHand.push(10)
-			aiTotal = aiHand.reduce(reducer);
+			if(aceIndex == 1){
+				aiHand.push(10)
+				aiTotal = aiHand.reduce(reducer);
+			}
 		}
-	}
 	}
 	if(aiTotal > 21){
 		console.log("AI has busted! Game has been reset!");
@@ -174,10 +174,10 @@ function start() {
 		cardRemove(index);	
 		userTotal = userHand.reduce(reducer);
 		if(userTotal + 11 <= 22){
-		if(aceIndex == 1){
-			userHand.push(10)
-			userTotal = userHand.reduce(reducer);
-		}
+			if(aceIndex == 1){
+				userHand.push(10)
+				userTotal = userHand.reduce(reducer);
+			}
 		}
 	}
 	console.log("User current hand: " + userTotal);
