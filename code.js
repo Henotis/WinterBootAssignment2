@@ -20,10 +20,10 @@
 
 //The 1's are considered aces and 10's are faces
 let deck = [
-	1, 1,
-	1, 1,
-	1, 1,
-	1, 1
+	1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,
+	1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,
+	1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,
+	1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10
 ];
 
 let wins = 0;
@@ -42,10 +42,10 @@ const reducer = (accumulator, currentValue) => accumulator + currentValue;
 // returns the Blackjack game to its initial state
 function reset() {
 	deck = [
-		1, 1,
-		1, 1,
-		1, 1,
-		1, 1
+		1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,
+		1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,
+		1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,
+		1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10
 	];
 
 	aiHand = [];
