@@ -33,8 +33,6 @@ let ties = 0;
 let aiHand = [];
 let userHand = [];
 let index = 0;
-let aiTotal = 0;
-let userTotal = 0;
 
 // this variable is used in .reduce() to add an array together
 const reducer = (accumulator, currentValue) => accumulator + currentValue;
@@ -51,8 +49,6 @@ function reset() {
 	aiHand = [];
 	userHand = [];
 	index = 0;
-	aiTotal = 0;
-	userTotal = 0
 }
 
 // displays wins, losses, and ties
@@ -60,8 +56,8 @@ function status() {
 	console.log("Wins: " + wins);
 	console.log("Losses: " + losses);
 	console.log("Ties: " + ties);
-	console.log("AI current total: " + aiTotal)
-	console.log("Your current total: " + userTotal)
+	console.log("AI current total: " + aiHand.reduce(reducer, 0))
+	console.log("Your current total: " + userHand.reduce(reducer, 0))
 }
 
 // this function should remove the card from deck once it's dealt
@@ -79,15 +75,13 @@ function hit() {
 	userHand.push(aceIndex);
 	cardRemove(index);
 	///////////////////////////
-	userTotal = userHand.reduce(reducer);
-	if(userTotal + 11 <= 22){
+	if(userHand.reduce(reducer, 0) + 11 <= 22){
 		if(aceIndex == 1){
 			userHand.push(10)
-			userTotal = userHand.reduce(reducer);
 		}
 	}
-	console.log("Your current total: " + userTotal);
-	if (userTotal > 21) {
+	console.log("Your current total: " + userHand.reduce(reducer, 0));
+	if (userHand.reduce(reducer, 0) > 21) {
 		losses += 1;
 		console.log("You bust! Game has reset! Enter start() to play again!")
 		status();
@@ -97,22 +91,19 @@ function hit() {
 
 // user doesn't want to hit anymore and compares their numbers with the AI for the win or loss
 function stand() {
-	aiTotal = aiHand.reduce(reducer);
-	userTotal = userHand.reduce(reducer);
-
-	if (aiTotal > userTotal) {
-		console.log("AI wins! Game has reset! Enter start() to play again! Winning Number: " + aiTotal)
+	if (aiHand.reduce(reducer, 0) > userHand.reduce(reducer, 0)) {
+		console.log("AI won! Game has reset! Enter start() to play again!")
 		losses += 1;
 		status();
 		reset();
 	}
-	else if (aiTotal < userTotal) {
+	else if (aiHand.reduce(reducer, 0) < userHand.reduce(reducer, 0)) {
 		console.log("You won! Game has reset! Enter start() to play again!")
 		wins++;
 		status();
 		reset();
 	}
-	else if(aiTotal == userTotal){
+	else{
 		console.log("It's a tie! Game has reset! Enter start() to play again!")
 		ties += 1;
 		status();
@@ -136,35 +127,31 @@ function start() {
 		aiHand.push(aceIndex);
 		//finally cutting out the card!
 		cardRemove(index);
-		aiTotal = aiHand.reduce(reducer);
 		//checking if adding theoretical ace at the value 11 is > 22
-		if(aiTotal + 11 <= 22){
+		if(aiHand.reduce(reducer, 0) + 11 <= 22){
 			//checking if a 1 was selected
 			if(aceIndex == 1){
 				//this pushes 10 because 1 is already pushed into
 				//aiHand, adding 10 will make it 11. Ace's value.
 				aiHand.push(10)
-				aiTotal = aiHand.reduce(reducer);
 			}
 		}
 	}
 	//the AI will hit again if it's count is below 17
-	if(aiTotal < 17){
+	if(aiHand.reduce(reducer, 0) < 17){
 		index = Math.floor(Math.random()*deck.length);
 		aceIndex = deck[index];
 		console.log("Card dealt to AI: " + aceIndex);
 		aiHand.push(aceIndex);
 		cardRemove(index);
-		aiTotal = aiHand.reduce(reducer);
-		if(userTotal + 11 <= 22){
+		if(userHand.reduce(reducer, 0) + 11 <= 22){
 			if(aceIndex == 1){
 				userHand.push(10)
-				userTotal = userHand.reduce(reducer);
 			}
 		}
 	}
 	//the AI will bust if over 21
-	if(aiTotal > 21){
+	if(aiHand.reduce(reducer, 0) > 21){
 		console.log("AI has busted!");
 		console.log("You won! Game has reset! Enter start() to play again!")
 		wins++;
@@ -174,7 +161,7 @@ function start() {
 		// ends the match early
 		return;
 	}
-	console.log("AI current total: " + aiTotal);
+	console.log("AI current total: " + aiHand.reduce(reducer, 0));
 
 	//User initial draw
 	for(let i = 0; i < 2; i++){
@@ -182,16 +169,14 @@ function start() {
 		aceIndex = deck[index];
 		console.log("Card dealt to you: " + aceIndex);
 		userHand.push(aceIndex);
-		cardRemove(index);	
-		userTotal = userHand.reduce(reducer);
-		if(userTotal + 11 <= 22){
+		cardRemove(index);
+		if(userHand.reduce(reducer, 0) + 11 <= 22){
 			if(aceIndex == 1){
 				userHand.push(10)
-				userTotal = userHand.reduce(reducer);
 			}
 		}
 	}
-	console.log("Your current total: " + userTotal);
+	console.log("Your current total: " + userHand.reduce(reducer, 0));
 }
 
 // user menu
