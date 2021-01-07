@@ -35,6 +35,7 @@ let userHand = [];
 let index = 0;
 let aiTotal = 0;
 let userTotal = 0;
+let aceIndex = 0;
 
 // this variable is used in .reduce() to add an array together
 const reducer = (accumulator, currentValue) => accumulator + currentValue;
@@ -52,7 +53,8 @@ function reset() {
 	userHand = [];
 	index = 0;
 	aiTotal = 0;
-	userTotal = 0
+	userTotal = 0;
+	aceIndex = 0;
 }
 
 // displays wins, losses, and ties
@@ -71,7 +73,6 @@ function cardRemove(index) {
 
 //adds to player hand only!
 function hit() {
-	let aceIndex = 0;
 	///////////////////////////
 	index = Math.floor(Math.random()*deck.length);
 	aceIndex = deck[index];
@@ -124,20 +125,20 @@ function stand() {
 // starts the game
 function start() {
 	reset();
-	
-	//temporarily holds the card that we want to cut from the deck
-	index = 0;
 	for(let i = 0; i < 2; i++){
 		//assigning a random index from deck size to cutCard
 		index = Math.floor(Math.random()*deck.length);
-		//tracking the index of the card removed
 		//pushing the value if the cardIndex into hand
 		aceIndex = deck[index];
+		//tracks the index selected and displays the value
 		console.log("Index removed: " + index + " Value: " + aceIndex);
+		//pushing index value into aiHand
 		aiHand.push(aceIndex);
 		//finally cutting out the card!
 		cardRemove(index);
+		//adding the hand up for a total value
 		aiTotal = aiHand.reduce(reducer);
+		//condition for aces
 		if(aiTotal + 11 <= 22){
 			if(aceIndex == 1){
 				aiHand.push(10)
@@ -145,7 +146,7 @@ function start() {
 			}
 		}
 	}
-
+	//AI will always hit if it's count is under 17
 	if(aiTotal < 17){
 		index = Math.floor(Math.random()*deck.length);
 		aceIndex = deck[index];
@@ -160,6 +161,7 @@ function start() {
 			}
 		}
 	}
+	//AI will bust over 21
 	if(aiTotal > 21){
 		console.log("AI has busted! Game has been reset!");
 		console.log("AI's total was: " + aiTotal);
