@@ -20,10 +20,10 @@
 
 //The 1's are considered aces and 10's are faces
 let deck = [
-	1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,
-	1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,
-	1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,
-	1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10
+	1, 10,
+	1, 10,
+	1, 10,
+	1, 10
 ];
 
 let wins = 0;
@@ -42,10 +42,10 @@ const reducer = (accumulator, currentValue) => accumulator + currentValue;
 // returns the Blackjack game to its initial state
 function reset() {
 	deck = [
-		1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,
-		1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,
-		1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10,
-		1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10
+		1, 10,
+		1, 10,
+		1, 10,
+		1, 10
 	];
 
 	aiHand = [];
@@ -83,9 +83,9 @@ function hit() {
 	if(userTotal + 11 <= 22){
 		if(aceIndex == 1){
 			userHand.push(10)
-			userTotal = userHand.reduce(reducer);
+			userTotal = aiHand.reduce(reducer);
 		}
-	}
+		}
 	console.log("Your current Total: " + userTotal);
 	if (userTotal > 21) {
 		losses += 1;
@@ -130,27 +130,22 @@ function start() {
 	for(let i = 0; i < 2; i++){
 		//assigning a random index from deck size to cutCard
 		index = Math.floor(Math.random()*deck.length);
-		//assinging to a variable
-		aceIndex = deck[index];
 		//tracking the index of the card removed
-		console.log("Index removed: " + index + " Value: " + aceIndex);
 		//pushing the value if the cardIndex into hand
+		aceIndex = deck[index];
+		console.log("Index removed: " + index + " Value: " + aceIndex);
 		aiHand.push(aceIndex);
 		//finally cutting out the card!
 		cardRemove(index);
 		aiTotal = aiHand.reduce(reducer);
-		//checking if adding theoretical ace at the value 11 is > 22
 		if(aiTotal + 11 <= 22){
-			//checking if a 1 was selected
-			if(aceIndex == 1){
-				//this pushes 10 because 1 is already pushed into
-				//aiHand, adding 10 will make it 11. Ace's value.
-				aiHand.push(10)
-				aiTotal = aiHand.reduce(reducer);
-			}
+		if(aceIndex == 1){
+			aiHand.push(10)
+			aiTotal = aiHand.reduce(reducer);
 		}
 	}
-	//the AI will hit again if it's count is below 17
+	}
+
 	if(aiTotal < 17){
 		index = Math.floor(Math.random()*deck.length);
 		aceIndex = deck[index];
@@ -158,22 +153,19 @@ function start() {
 		aiHand.push(aceIndex);
 		cardRemove(index);
 		aiTotal = aiHand.reduce(reducer);
-		if(userTotal + 11 <= 22){
-			if(aceIndex == 1){
-				userHand.push(10)
-				userTotal = userHand.reduce(reducer);
-			}
+		if(aiTotal + 11 <= 21){
+		if(aceIndex == 1){
+			aiHand.push(10)
+			aiTotal = aiHand.reduce(reducer);
 		}
 	}
-	//the AI will bust if over 21
+	}
 	if(aiTotal > 21){
 		console.log("AI has busted! Game has been reset!");
 		console.log("AI's total was: " + aiTotal);
 		reset();
 	}
 	console.log("AI current hand: " + aiTotal);
-
-	//User initial draw
 	for(let i = 0; i < 2; i++){
 		index = Math.floor(Math.random()*deck.length);
 		aceIndex = deck[index];
@@ -182,11 +174,19 @@ function start() {
 		cardRemove(index);	
 		userTotal = userHand.reduce(reducer);
 		if(userTotal + 11 <= 22){
-			if(aceIndex == 1){
-				userHand.push(10)
-				userTotal = userHand.reduce(reducer);
-			}
+		if(aceIndex == 1){
+			userHand.push(10)
+			userTotal = userHand.reduce(reducer);
+		}
 		}
 	}
 	console.log("User current hand: " + userTotal);
 }
+
+// user menu
+console.log("===== Welcome to the Blackjack Game Engine =====")
+console.log("Enter start() to begin the Blackjack game.")
+console.log("Enter status() to check your wins, losses, ties, and hands.")
+console.log("Enter hit() to draw a card from the deck.")
+console.log("Enter stand() to end the match and compare hands.")
+console.log("Enter reset() to restart the game.")
