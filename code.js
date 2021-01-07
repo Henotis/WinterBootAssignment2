@@ -190,3 +190,11 @@ function start() {
 	}
 	console.log("User current hand: " + userTotal);
 }
+
+// user menu
+console.log("===== Welcome to the Blackjack Game Engine =====")
+console.log("Enter start() to begin the Blackjack game.")
+console.log("Enter status() to check your wins, losses, ties, and hands.")
+console.log("Enter hit() to draw a card from the deck.")
+console.log("Enter stand() to end the match and compare hands.")
+console.log("Enter reset() to restart the game.")
